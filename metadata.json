@@ -1,0 +1,6 @@
+{
+  "name": "Contact Center Analytics",
+  "description": "Análisis exhaustivo de tiempos de solución, cumplimiento de SLA y gestión operativa de casos especiales de Contact Center.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
