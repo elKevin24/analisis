@@ -12,6 +12,7 @@ import {
   Briefcase
 } from 'lucide-react';
 import { SpecialCase, SpecialCaseTimeMetrics } from '../types';
+import { formatNumber, formatDecimal } from '../utils/formatters';
 
 interface TimeOverviewViewProps {
   cases: SpecialCase[];
@@ -194,11 +195,11 @@ export const TimeOverviewView: React.FC<TimeOverviewViewProps> = ({
                 Ficha Auditada del Mes
               </span>
               <h4 className="text-xl font-black text-slate-900">
-                {activeMonthData.mes} — {activeMonthData.count.toLocaleString()} Casos Registrados
+                {activeMonthData.mes} — {formatNumber(activeMonthData.count)} Casos Registrados
               </h4>
             </div>
             <div className="text-xs text-slate-600 font-medium">
-              Rango en horas hábiles: <strong>{activeMonthData.minHours}h a {activeMonthData.maxHours.toLocaleString()}h</strong>
+              Rango en horas hábiles: <strong>{formatNumber(activeMonthData.minHours)}h a {formatNumber(activeMonthData.maxHours)}h</strong>
             </div>
           </div>
 
@@ -210,9 +211,9 @@ export const TimeOverviewView: React.FC<TimeOverviewViewProps> = ({
                 <strong>Auditoría Exacta de {activeMonthData.mes} (Base 8 Horas Hábiles):</strong>
               </div>
               <div className="font-mono text-[11px] space-y-0.5 text-blue-900">
-                <div>• Suma directa de la columna Excel: <strong>{activeMonthData.rawSumExcel.toLocaleString()}</strong> días</div>
-                <div>• Conversión a Horas Hábiles (&times; 8h): <strong>{activeMonthData.rawSumExcel.toLocaleString()} &times; 8 = {activeMonthData.sumHours.toLocaleString()} horas hábiles</strong></div>
-                <div>• Promedio en Horas Hábiles: <strong>{activeMonthData.sumHours.toLocaleString()} hrs &divide; {activeMonthData.count} casos = {activeMonthData.avgHours.toFixed(2)} horas hábiles</strong></div>
+                <div>• Suma directa de la columna Excel: <strong>{formatNumber(activeMonthData.rawSumExcel)}</strong> días</div>
+                <div>• Conversión a Horas Hábiles (&times; 8h): <strong>{formatNumber(activeMonthData.rawSumExcel)} &times; 8 = {formatNumber(activeMonthData.sumHours)} horas hábiles</strong></div>
+                <div>• Promedio en Horas Hábiles: <strong>{formatNumber(activeMonthData.sumHours)} hrs &divide; {formatNumber(activeMonthData.count)} casos = {formatDecimal(activeMonthData.avgHours)} horas hábiles</strong></div>
               </div>
             </div>
           </div>
@@ -226,10 +227,10 @@ export const TimeOverviewView: React.FC<TimeOverviewViewProps> = ({
                 Sumatoria Horas Hábiles
               </span>
               <div className="text-xl font-black text-blue-700 mt-1 font-mono">
-                {activeMonthData.sumHours.toLocaleString()} hrs
+                {formatNumber(activeMonthData.sumHours)} hrs
               </div>
               <span className="text-[10px] text-slate-500 mt-0.5 block font-mono">
-                Excel: {activeMonthData.rawSumExcel.toLocaleString()} &times; 8h
+                Excel: {formatNumber(activeMonthData.rawSumExcel)} &times; 8h
               </span>
             </div>
 
@@ -239,10 +240,10 @@ export const TimeOverviewView: React.FC<TimeOverviewViewProps> = ({
                 Promedio / Media Hábil
               </span>
               <div className="text-xl font-black text-blue-600 mt-1 font-mono">
-                {activeMonthData.avgHours.toFixed(2)} hrs
+                {formatDecimal(activeMonthData.avgHours)} hrs
               </div>
               <span className="text-[10px] text-slate-500 mt-0.5 block font-mono">
-                {activeMonthData.sumHours.toLocaleString()}h &divide; {activeMonthData.count}
+                {formatNumber(activeMonthData.sumHours)}h &divide; {formatNumber(activeMonthData.count)}
               </span>
             </div>
 
@@ -252,10 +253,10 @@ export const TimeOverviewView: React.FC<TimeOverviewViewProps> = ({
                 Mediana Hábil (P50)
               </span>
               <div className="text-xl font-black text-emerald-600 mt-1 font-mono">
-                {activeMonthData.medianHours} hrs
+                {formatNumber(activeMonthData.medianHours)} hrs
               </div>
               <span className="text-[10px] text-slate-500 mt-0.5 block">
-                50% de casos &le; {activeMonthData.medianHours}h hábiles
+                50% de casos &le; {formatNumber(activeMonthData.medianHours)}h hábiles
               </span>
             </div>
 
@@ -265,10 +266,10 @@ export const TimeOverviewView: React.FC<TimeOverviewViewProps> = ({
                 Moda Hábil (Más Frecuente)
               </span>
               <div className="text-xl font-black text-indigo-600 mt-1 font-mono">
-                {activeMonthData.modeHours} hrs
+                {formatNumber(activeMonthData.modeHours)} hrs
               </div>
               <span className="text-[10px] text-slate-500 mt-0.5 block">
-                {activeMonthData.modeCount} casos ({activeMonthData.modePct}%)
+                {formatNumber(activeMonthData.modeCount)} casos ({formatDecimal(activeMonthData.modePct, 1)}%)
               </span>
             </div>
           </div>
@@ -311,14 +312,14 @@ export const TimeOverviewView: React.FC<TimeOverviewViewProps> = ({
                         {isCurrent && <span className="w-1.5 h-1.5 rounded-full bg-blue-600 shrink-0" />}
                         {m.mes}
                       </td>
-                      <td className="py-2 px-3 text-center text-slate-700">{m.count.toLocaleString()}</td>
-                      <td className="py-2 px-3 text-right font-semibold text-slate-800 bg-slate-50/50">{m.rawSumExcel.toLocaleString()}</td>
-                      <td className="py-2 px-3 text-right font-bold text-blue-700">{m.sumHours.toLocaleString()} hrs</td>
-                      <td className="py-2 px-3 text-right font-extrabold text-blue-600">{m.avgHours.toFixed(2)} hrs</td>
-                      <td className="py-2 px-3 text-right text-emerald-600">{m.medianHours} hrs</td>
-                      <td className="py-2 px-3 text-right text-indigo-600">{m.modeHours} hrs</td>
-                      <td className="py-2 px-3 text-right font-sans font-medium text-slate-600">{m.modePct}%</td>
-                      <td className="py-2 px-3 text-right text-amber-700">{m.p90Hours} hrs</td>
+                      <td className="py-2 px-3 text-center text-slate-700">{formatNumber(m.count)}</td>
+                      <td className="py-2 px-3 text-right font-semibold text-slate-800 bg-slate-50/50">{formatNumber(m.rawSumExcel)}</td>
+                      <td className="py-2 px-3 text-right font-bold text-blue-700">{formatNumber(m.sumHours)} hrs</td>
+                      <td className="py-2 px-3 text-right font-extrabold text-blue-600">{formatDecimal(m.avgHours)} hrs</td>
+                      <td className="py-2 px-3 text-right text-emerald-600">{formatNumber(m.medianHours)} hrs</td>
+                      <td className="py-2 px-3 text-right text-indigo-600">{formatNumber(m.modeHours)} hrs</td>
+                      <td className="py-2 px-3 text-right font-sans font-medium text-slate-600">{formatDecimal(m.modePct, 1)}%</td>
+                      <td className="py-2 px-3 text-right text-amber-700">{formatNumber(m.p90Hours)} hrs</td>
                     </tr>
                   );
                 })}
@@ -343,7 +344,7 @@ export const TimeOverviewView: React.FC<TimeOverviewViewProps> = ({
             </span>
             <h3 className="text-lg sm:text-xl font-black text-slate-900 tracking-tight flex items-center gap-2">
               <ShieldCheck className="w-5 h-5 text-emerald-600" />
-              Total General Consolidado ({totalN.toLocaleString()} Casos Especiales — 8h Hábiles)
+              Total General Consolidado ({formatNumber(totalN)} Casos Especiales — 8h Hábiles)
             </h3>
           </div>
           <p className="text-xs sm:text-sm text-slate-500 mt-1">
@@ -366,10 +367,10 @@ export const TimeOverviewView: React.FC<TimeOverviewViewProps> = ({
                 </span>
               </div>
               <div className="text-3xl font-black text-blue-800 mt-2 font-mono">
-                {totalSumHours.toLocaleString()} hrs
+                {formatNumber(totalSumHours)} hrs
               </div>
               <div className="text-xs font-bold text-blue-900 mt-0.5">
-                Suma total de los {totalN.toLocaleString()} casos ({totalSumExcel.toLocaleString()} días en Excel &times; 8)
+                Suma total de los {formatNumber(totalN)} casos ({formatNumber(totalSumExcel)} días en Excel &times; 8)
               </div>
             </div>
             <div className="mt-3 pt-2.5 border-t border-blue-200 text-[11px] text-blue-950">
@@ -389,7 +390,7 @@ export const TimeOverviewView: React.FC<TimeOverviewViewProps> = ({
                 </span>
               </div>
               <div className="text-3xl font-black text-emerald-700 mt-2 font-mono">
-                {stats.medianHours} hrs hábiles
+                {formatNumber(stats.medianHours)} hrs hábiles
               </div>
               <div className="text-xs font-bold text-emerald-800 mt-0.5">
                 Punto central (1 jornada hábil)
@@ -412,14 +413,14 @@ export const TimeOverviewView: React.FC<TimeOverviewViewProps> = ({
                 </span>
               </div>
               <div className="text-3xl font-black text-indigo-700 mt-2 font-mono">
-                {stats.modeHours} hrs hábiles
+                {formatNumber(stats.modeHours)} hrs hábiles
               </div>
               <div className="text-xs font-bold text-indigo-900 mt-0.5">
-                {stats.modeFrequency.toLocaleString()} casos ({stats.modePercentage}%)
+                {formatNumber(stats.modeFrequency)} casos ({formatDecimal(stats.modePercentage, 1)}%)
               </div>
             </div>
             <div className="mt-3 pt-2.5 border-t border-indigo-200 text-[11px] text-indigo-950">
-              El <strong>{stats.modePercentage}%</strong> de todos los casos se resolvió en <strong>8 horas hábiles</strong> (1 día).
+              El <strong>{formatDecimal(stats.modePercentage, 1)}%</strong> de todos los casos se resolvió en <strong>8 horas hábiles</strong> (1 día).
             </div>
           </div>
 
@@ -435,10 +436,10 @@ export const TimeOverviewView: React.FC<TimeOverviewViewProps> = ({
                 </span>
               </div>
               <div className="text-2xl font-black text-slate-800 mt-2 font-mono">
-                {rawMeanHours.toFixed(2)} hrs hábiles
+                {formatDecimal(rawMeanHours)} hrs hábiles
               </div>
               <div className="text-xs font-bold text-slate-700 mt-0.5">
-                {totalSumHours.toLocaleString()} hrs &divide; {totalN.toLocaleString()} casos
+                {formatNumber(totalSumHours)} hrs &divide; {formatNumber(totalN)} casos
               </div>
             </div>
             <div className="mt-2.5 pt-2 border-t border-slate-200 text-[11px] text-slate-700">
@@ -458,7 +459,7 @@ export const TimeOverviewView: React.FC<TimeOverviewViewProps> = ({
                 </span>
               </div>
               <div className="text-2xl font-black text-purple-700 mt-2 font-mono">
-                {stats.trimmedMean10Hours.toFixed(2)} hrs hábiles
+                {formatDecimal(stats.trimmedMean10Hours)} hrs hábiles
               </div>
               <div className="text-xs font-bold text-purple-900 mt-0.5">
                 Promedio del 80% central de los casos
@@ -481,10 +482,10 @@ export const TimeOverviewView: React.FC<TimeOverviewViewProps> = ({
                 </span>
               </div>
               <div className="text-2xl font-black text-amber-800 mt-2 font-mono">
-                {stats.p90Hours} hrs hábiles
+                {formatNumber(stats.p90Hours)} hrs hábiles
               </div>
               <div className="text-xs font-bold text-amber-900 mt-0.5">
-                El 90% de los casos concluye &le; {stats.p90Hours}h hábiles (7 días)
+                El 90% de los casos concluye &le; {formatNumber(stats.p90Hours)}h hábiles (7 días)
               </div>
             </div>
             <div className="mt-2.5 pt-2 border-t border-amber-200 text-[11px] text-amber-900">
@@ -514,56 +515,56 @@ export const TimeOverviewView: React.FC<TimeOverviewViewProps> = ({
               <tbody className="divide-y divide-slate-100 bg-white">
                 <tr className="hover:bg-slate-50/70">
                   <td className="py-2.5 px-3 font-bold text-slate-900">Sumatoria Total Hábil</td>
-                  <td className="py-2.5 px-3 text-right font-black text-blue-700 font-mono">{totalSumHours.toLocaleString()} hrs</td>
-                  <td className="py-2.5 px-3 font-mono text-[11px] text-slate-600">{totalSumExcel.toLocaleString()} (Suma Excel) &times; 8h</td>
+                  <td className="py-2.5 px-3 text-right font-black text-blue-700 font-mono">{formatNumber(totalSumHours)} hrs</td>
+                  <td className="py-2.5 px-3 font-mono text-[11px] text-slate-600">{formatNumber(totalSumExcel)} (Suma Excel) &times; 8h</td>
                   <td className="py-2.5 px-3 text-slate-600">Suma total de horas laborales requeridas para todos los casos del año</td>
                 </tr>
                 <tr className="hover:bg-slate-50/70">
                   <td className="py-2.5 px-3 font-bold text-slate-900">Mediana Hábil (Percentil 50)</td>
-                  <td className="py-2.5 px-3 text-right font-black text-emerald-600 font-mono">{stats.medianHours} hrs</td>
+                  <td className="py-2.5 px-3 text-right font-black text-emerald-600 font-mono">{formatNumber(stats.medianHours)} hrs</td>
                   <td className="py-2.5 px-3 font-mono text-[11px] text-slate-600">Posición central (N+1)/2</td>
                   <td className="py-2.5 px-3 text-slate-600">El 50% de todos los casos del año se resuelve en 8 horas hábiles (1 día laboral) o menos</td>
                 </tr>
                 <tr className="hover:bg-slate-50/70">
                   <td className="py-2.5 px-3 font-bold text-slate-900">Moda Hábil (Valor Modal)</td>
-                  <td className="py-2.5 px-3 text-right font-black text-indigo-600 font-mono">{stats.modeHours} hrs</td>
-                  <td className="py-2.5 px-3 font-mono text-[11px] text-slate-600">Mayor frecuencia ({stats.modeFrequency.toLocaleString()} casos)</td>
-                  <td className="py-2.5 px-3 text-slate-600">El {stats.modePercentage}% de los casos concluye en 8 horas hábiles (1 día laboral)</td>
+                  <td className="py-2.5 px-3 text-right font-black text-indigo-600 font-mono">{formatNumber(stats.modeHours)} hrs</td>
+                  <td className="py-2.5 px-3 font-mono text-[11px] text-slate-600">Mayor frecuencia ({formatNumber(stats.modeFrequency)} casos)</td>
+                  <td className="py-2.5 px-3 text-slate-600">El {formatDecimal(stats.modePercentage, 1)}% de los casos concluye en 8 horas hábiles (1 día laboral)</td>
                 </tr>
                 <tr className="hover:bg-slate-50/70">
                   <td className="py-2.5 px-3 font-bold text-slate-900">Media / Promedio Hábil</td>
-                  <td className="py-2.5 px-3 text-right font-black text-blue-600 font-mono">{rawMeanHours.toFixed(2)} hrs</td>
-                  <td className="py-2.5 px-3 font-mono text-[11px] text-slate-600">{totalSumHours.toLocaleString()} hrs &divide; {totalN.toLocaleString()} casos</td>
+                  <td className="py-2.5 px-3 text-right font-black text-blue-600 font-mono">{formatDecimal(rawMeanHours)} hrs</td>
+                  <td className="py-2.5 px-3 font-mono text-[11px] text-slate-600">{formatNumber(totalSumHours)} hrs &divide; {formatNumber(totalN)} casos</td>
                   <td className="py-2.5 px-3 text-slate-600">Promedio general anual de resolución en horas hábiles</td>
                 </tr>
                 <tr className="hover:bg-slate-50/70">
                   <td className="py-2.5 px-3 font-bold text-slate-900">Media Recortada (Trimmed 10%)</td>
-                  <td className="py-2.5 px-3 text-right font-bold text-purple-600 font-mono">{stats.trimmedMean10Hours.toFixed(2)} hrs</td>
+                  <td className="py-2.5 px-3 text-right font-bold text-purple-600 font-mono">{formatDecimal(stats.trimmedMean10Hours)} hrs</td>
                   <td className="py-2.5 px-3 font-mono text-[11px] text-slate-600">Media del 80% central</td>
                   <td className="py-2.5 px-3 text-slate-600">Media limpia sin el 10% superior ni el 10% inferior</td>
                 </tr>
                 <tr className="hover:bg-slate-50/70">
                   <td className="py-2.5 px-3 font-bold text-slate-900">Percentil 90 Hábil (P90)</td>
-                  <td className="py-2.5 px-3 text-right font-bold text-amber-700 font-mono">{stats.p90Hours} hrs</td>
+                  <td className="py-2.5 px-3 text-right font-bold text-amber-700 font-mono">{formatNumber(stats.p90Hours)} hrs</td>
                   <td className="py-2.5 px-3 font-mono text-[11px] text-slate-600">P90 = 0.90 &times; (N-1)</td>
                   <td className="py-2.5 px-3 text-slate-600">El 90% de los casos concluye en 56 horas hábiles (7 días hábiles) o menos</td>
                 </tr>
                 <tr className="hover:bg-slate-50/70">
                   <td className="py-2.5 px-3 font-bold text-slate-900">Percentil 95 Hábil (P95)</td>
-                  <td className="py-2.5 px-3 text-right font-bold text-rose-600 font-mono">{stats.p95Hours} hrs</td>
+                  <td className="py-2.5 px-3 text-right font-bold text-rose-600 font-mono">{formatNumber(stats.p95Hours)} hrs</td>
                   <td className="py-2.5 px-3 font-mono text-[11px] text-slate-600">P95 = 0.95 &times; (N-1)</td>
                   <td className="py-2.5 px-3 text-slate-600">El 95% de los casos concluye en 96 horas hábiles (12 días hábiles) o menos</td>
                 </tr>
                 <tr className="hover:bg-slate-50/70">
                   <td className="py-2.5 px-3 font-bold text-slate-900">Desviación Estándar (&sigma;)</td>
-                  <td className="py-2.5 px-3 text-right font-bold text-slate-800 font-mono">&plusmn; {stats.stdDevHours} hrs</td>
-                  <td className="py-2.5 px-3 font-mono text-[11px] text-slate-600">&sigma; = &radic;{stats.varianceHours} hrs&sup2;</td>
+                  <td className="py-2.5 px-3 text-right font-bold text-slate-800 font-mono">&plusmn; {formatDecimal(stats.stdDevHours)} hrs</td>
+                  <td className="py-2.5 px-3 font-mono text-[11px] text-slate-600">&sigma; = &radic;{formatDecimal(stats.varianceHours)} hrs&sup2;</td>
                   <td className="py-2.5 px-3 text-slate-600">Dispersión de los tiempos respecto al promedio hábil</td>
                 </tr>
                 <tr className="hover:bg-slate-50/70">
                   <td className="py-2.5 px-3 font-bold text-slate-900">Rango General Hábil</td>
-                  <td className="py-2.5 px-3 text-right font-bold text-slate-800 font-mono">{stats.minHours} a {stats.maxHours.toLocaleString()} hrs</td>
-                  <td className="py-2.5 px-3 font-mono text-[11px] text-slate-600">Max - Min = {stats.rangeHours.toLocaleString()} hrs</td>
+                  <td className="py-2.5 px-3 text-right font-bold text-slate-800 font-mono">{formatNumber(stats.minHours)} a {formatNumber(stats.maxHours)} hrs</td>
+                  <td className="py-2.5 px-3 font-mono text-[11px] text-slate-600">Max - Min = {formatNumber(stats.rangeHours)} hrs</td>
                   <td className="py-2.5 px-3 text-slate-600">Amplitud total de los 5,050 casos del año en horas hábiles</td>
                 </tr>
               </tbody>

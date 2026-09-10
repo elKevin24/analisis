@@ -8,6 +8,7 @@ import {
   Clock,
   Briefcase
 } from 'lucide-react';
+import { formatNumber } from '../utils/formatters';
 
 interface HeaderProps {
   onOpenUpload: () => void;
@@ -42,7 +43,7 @@ export const Header: React.FC<HeaderProps> = ({
                 </h1>
                 <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] sm:text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 shrink-0">
                   <ShieldCheck className="w-3 h-3" />
-                  {totalCases.toLocaleString()} Casos
+                  {formatNumber(totalCases)} Casos
                 </span>
                 <span className="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] sm:text-xs font-semibold bg-amber-50 text-amber-800 border border-amber-200 shrink-0">
                   <Briefcase className="w-3 h-3" />
@@ -50,7 +51,7 @@ export const Header: React.FC<HeaderProps> = ({
                 </span>
               </div>
               <p className="text-[11px] text-slate-500">
-                Sumatoria auditada ({totalSumHours.toLocaleString()} hrs hábiles), Media, Mediana y Moda
+                Sumatoria auditada ({formatNumber(totalSumHours)} hrs hábiles), Media, Mediana y Moda
               </p>
             </div>
           </div>

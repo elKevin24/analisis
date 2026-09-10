@@ -8,6 +8,7 @@ import {
   RotateCcw
 } from 'lucide-react';
 import { parseSpecialCasesExcelFile } from '../services/excelParser';
+import { formatNumber } from '../utils/formatters';
 import { SpecialCase } from '../types';
 
 interface DataUploadModalProps {
@@ -40,7 +41,7 @@ export const DataUploadModal: React.FC<DataUploadModalProps> = ({
       const cases = parseSpecialCasesExcelFile(buffer);
       if (cases.length > 0) {
         setParsedCases(cases);
-        setSuccessMsg(`Detectado: Reporte de Casos Especiales con ${cases.length.toLocaleString()} registros y sus tiempos de solución.`);
+        setSuccessMsg(`Detectado: Reporte de Casos Especiales con ${formatNumber(cases.length)} registros y sus tiempos de solución.`);
       } else {
         throw new Error('No se encontraron registros de casos especiales en el archivo.');
       }

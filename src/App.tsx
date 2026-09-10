@@ -29,7 +29,7 @@ export const App: React.FC = () => {
     const tipifTimes: Record<string, { sumHours: number; count: number }> = {};
     allCases.forEach((c) => {
       if (!tipifTimes[c.tipificacion]) tipifTimes[c.tipificacion] = { sumHours: 0, count: 0 };
-      tipifTimes[c.tipificacion].sumHours += Math.round(c.tiempoSolucionDias * 24);
+      tipifTimes[c.tipificacion].sumHours += Math.round(c.tiempoSolucionDias * 8);
       tipifTimes[c.tipificacion].count += 1;
     });
 
@@ -50,7 +50,7 @@ export const App: React.FC = () => {
     allCases.forEach((c) => {
       const area = c.areaResolucion || 'No asignada';
       if (!areaTimes[area]) areaTimes[area] = { sumHours: 0, count: 0 };
-      areaTimes[area].sumHours += Math.round(c.tiempoSolucionDias * 24);
+      areaTimes[area].sumHours += Math.round(c.tiempoSolucionDias * 8);
       areaTimes[area].count += 1;
     });
 
@@ -69,7 +69,7 @@ export const App: React.FC = () => {
     allCases.forEach((c) => {
       const sup = c.supervisor || 'No asignado';
       if (!supTimes[sup]) supTimes[sup] = { sumHours: 0, count: 0 };
-      supTimes[sup].sumHours += Math.round(c.tiempoSolucionDias * 24);
+      supTimes[sup].sumHours += Math.round(c.tiempoSolucionDias * 8);
       supTimes[sup].count += 1;
     });
 

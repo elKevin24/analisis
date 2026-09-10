@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import { SpecialCase } from '../types';
 import { exportCasesToCSV, exportToJSON } from '../services/exportService';
+import { formatNumber } from '../utils/formatters';
 
 interface ExportModalProps {
   isOpen: boolean;
@@ -71,7 +72,7 @@ export const ExportModal: React.FC<ExportModalProps> = ({
                   Reporte de Tiempos en Horas Hábiles (CSV)
                 </strong>
                 <span className="text-[11px] text-slate-500">
-                  {filteredCases.length.toLocaleString()} casos calculados a 8h hábiles por día
+                  {formatNumber(filteredCases.length)} casos calculados a 8h hábiles por día
                 </span>
               </div>
             </div>
@@ -95,7 +96,7 @@ export const ExportModal: React.FC<ExportModalProps> = ({
                   Solo Casos Críticos &gt; 56 Horas Hábiles (CSV)
                 </strong>
                 <span className="text-[11px] text-slate-500">
-                  {criticalCases.length.toLocaleString()} casos con demoras superiores a 7 días hábiles
+                  {formatNumber(criticalCases.length)} casos con demoras superiores a 7 días hábiles
                 </span>
               </div>
             </div>
